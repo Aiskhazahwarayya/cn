@@ -235,7 +235,6 @@ fun FormulirPendaftaran(modifier: Modifier = Modifier) {
                         fontSize = 18.sp
                     )
                 },
-
                 text = {
                     Column {
                         Text(text = "Nama : $nama", fontSize = 14.sp)
