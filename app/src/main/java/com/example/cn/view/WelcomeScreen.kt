@@ -9,21 +9,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.cn.R
 
 @Composable
 fun WelcomeScreen(
     onSubmitClick: () -> Unit
 ) {
+
+    val colorBackground = Color(0xFFE6E6FA)
+    val colorPurple700 = Color(0xFF673AB7)
+    val colorDeepPurple = Color(0xFF512DA8)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.lavender))
+            .background(colorBackground)
             .padding(16.dp),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -37,12 +40,11 @@ fun WelcomeScreen(
                 text = "Selamat Datang",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Normal,
-                color = colorResource(id = R.color.purple_700),
+                color = colorPurple700,
                 textAlign = TextAlign.Center
             )
         }
 
-        // Logo Section
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.weight(1f),
@@ -52,7 +54,7 @@ fun WelcomeScreen(
                 text = "CARD-LST",
                 fontSize = 36.sp,
                 fontWeight = FontWeight.Bold,
-                color = colorResource(id = R.color.deep_purple),
+                color = colorDeepPurple,
                 letterSpacing = 2.sp
             )
 
@@ -68,7 +70,7 @@ fun WelcomeScreen(
                 text = "MOBILE APP",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal,
-                color = colorResource(id = R.color.purple_700),
+                color = colorPurple700,
                 letterSpacing = 1.sp
             )
 
@@ -78,11 +80,10 @@ fun WelcomeScreen(
                 text = "2025",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = colorResource(id = R.color.deep_purple)
+                color = colorDeepPurple
             )
         }
 
-        // Footer
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(bottom = 60.dp)
@@ -91,14 +92,14 @@ fun WelcomeScreen(
                 text = "Aiskha Zahwa Rayya",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Normal,
-                color = colorResource(id = R.color.purple_700)
+                color = colorPurple700
             )
 
             Text(
                 text = "20230140146",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Light,
-                color = colorResource(id = R.color.purple_700),
+                color = colorPurple700,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
@@ -109,7 +110,8 @@ fun WelcomeScreen(
                     .padding(horizontal = 32.dp)
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.deep_purple)
+                    // Menggunakan val colorDeepPurple
+                    containerColor = colorDeepPurple
                 )
             ) {
                 Text(

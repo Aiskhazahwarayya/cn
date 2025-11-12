@@ -18,6 +18,7 @@ fun TampilData(
     jenisKelamin: String,
     statusPerkawinan: String,
     alamat: String,
+    tanggalLahir: String,  // <-- parameter tambahan
     onBerandaClick: () -> Unit,
     onFormulirClick: () -> Unit
 ) {
@@ -55,24 +56,16 @@ fun TampilData(
             Column(
                 modifier = Modifier.weight(1f)
             ) {
+                // NAMA LENGKAP
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 12.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = LightPurple
-                    ),
+                    colors = CardDefaults.cardColors(containerColor = LightPurple),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(
-                            text = "NAMA LENGKAP",
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = Color.Gray
-                        )
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text("NAMA LENGKAP", fontSize = 12.sp, fontWeight = FontWeight.Normal, color = Color.Gray)
                         Text(
                             text = namaLengkap,
                             fontSize = 20.sp,
@@ -84,24 +77,16 @@ fun TampilData(
                     }
                 }
 
+                // JENIS KELAMIN
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 12.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = LightPurple
-                    ),
+                    colors = CardDefaults.cardColors(containerColor = LightPurple),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(
-                            text = "JENIS KELAMIN",
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = Color.Gray
-                        )
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text("JENIS KELAMIN", fontSize = 12.sp, fontWeight = FontWeight.Normal, color = Color.Gray)
                         Text(
                             text = jenisKelamin,
                             fontSize = 20.sp,
@@ -113,24 +98,16 @@ fun TampilData(
                     }
                 }
 
+                // STATUS PERKAWINAN
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 12.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = LightPurple
-                    ),
+                    colors = CardDefaults.cardColors(containerColor = LightPurple),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(
-                            text = "STATUS PERKAWINAN",
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = Color.Gray
-                        )
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text("STATUS PERKAWINAN", fontSize = 12.sp, fontWeight = FontWeight.Normal, color = Color.Gray)
                         Text(
                             text = statusPerkawinan,
                             fontSize = 20.sp,
@@ -142,24 +119,16 @@ fun TampilData(
                     }
                 }
 
+                // ALAMAT
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = LightPurple
-                    ),
+                        .padding(bottom = 12.dp),
+                    colors = CardDefaults.cardColors(containerColor = LightPurple),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(
-                            text = "ALAMAT",
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = Color.Gray
-                        )
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text("ALAMAT", fontSize = 12.sp, fontWeight = FontWeight.Normal, color = Color.Gray)
                         Text(
                             text = alamat,
                             fontSize = 20.sp,
@@ -170,25 +139,40 @@ fun TampilData(
                         )
                     }
                 }
+
+                // TANGGAL LAHIR
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    colors = CardDefaults.cardColors(containerColor = LightPurple),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text("TANGGAL LAHIR", fontSize = 12.sp, fontWeight = FontWeight.Normal, color = Color.Gray)
+                        Text(
+                            text = tanggalLahir,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Normal,
+                            fontFamily = FontFamily.Cursive,
+                            color = Color.Black,
+                            modifier = Modifier.padding(top = 4.dp)
+                        )
+                    }
+                }
             }
 
+            // Tombol Beranda dan Formulir
             Column {
                 Button(
                     onClick = onBerandaClick,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = DeepPurple
-                    ),
+                    colors = ButtonDefaults.buttonColors(containerColor = DeepPurple),
                     shape = MaterialTheme.shapes.medium
                 ) {
-                    Text(
-                        text = "Beranda",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    )
+                    Text("Beranda", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -198,17 +182,10 @@ fun TampilData(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = LightPurple.copy(alpha = 0.6f)
-                    ),
+                    colors = ButtonDefaults.buttonColors(containerColor = LightPurple.copy(alpha = 0.6f)),
                     shape = MaterialTheme.shapes.medium
                 ) {
-                    Text(
-                        text = "Formulir Pendaftaran",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Normal,
-                        color = DeepPurple
-                    )
+                    Text("Formulir Pendaftaran", fontSize = 16.sp, fontWeight = FontWeight.Normal, color = DeepPurple)
                 }
             }
         }
