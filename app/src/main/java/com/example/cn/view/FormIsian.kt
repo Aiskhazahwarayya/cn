@@ -39,15 +39,13 @@ fun FormPendaftaran(
     val genderList = listOf("Laki-laki", "Perempuan")
 
     val listStatus = listOf("Lajang", "Janda", "Duda")
-    var expandedStatus by remember { mutableStateOf(false) }
-    var selectedStatus by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
+    var selectedStatus by remember { mutableStateOf("Belum dipilih") }
 
     val backgroundLavender = Color(0xFFF3E5F5)
     val purpleButton = Color(0xFF7C3AED)
     val headerGradientStart = Color(0xFFD1B3FF)
     val headerGradientEnd = Color(0xFFB388FF)
-
-    val context = LocalContext.current
 
     MaterialTheme(
         colorScheme = lightColorScheme(
@@ -135,30 +133,34 @@ fun FormPendaftaran(
                         }
 
                         // Status Perkawinan (KEMBALI KE HORIZONTAL)
+                        Text("Status", fontSize = 17.sp, color = Color.Black)
                         ExposedDropdownMenuBox(
-                            expanded = expandedStatus,
-                            onExpandedChange = { expandedStatus = !expandedStatus }
+                            expanded = expanded,
+                            onExpandedChange = { expanded = !expanded }
                         ) {
                             OutlinedTextField(
-                                value = if (selectedStatus.isEmpty()) "" else selectedStatus,
+                                value = selectedStatus,
                                 onValueChange = {},
                                 label = { Text("Status Perkawinan") },
-                                placeholder = { Text("Pilih status perkawinan") },
                                 readOnly = true,
+                                trailingIcon = {
+                                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                                },
                                 modifier = Modifier
                                     .menuAnchor()
                                     .fillMaxWidth()
                             )
                             ExposedDropdownMenu(
-                                expanded = expandedStatus,
-                                onDismissRequest = { expandedStatus = false }
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false }
                             ) {
-                                listStatus.forEach { option ->
+                                listStatus.forEach { status ->
                                     DropdownMenuItem(
-                                        text = { Text(option) },
+                                        text = { Text(status) },
                                         onClick = {
-                                            selectedStatus = option
-                                            expandedStatus = false
+                                            selectedStatus = status
+                                            textStatus = status
+                                            expanded = false
                                         }
                                     )
                                 }
