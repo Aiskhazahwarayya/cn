@@ -1,15 +1,12 @@
 package com.example.cn.view
 
-import android.widget.DatePicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Cake
+import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,7 +18,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -41,7 +37,10 @@ fun FormPendaftaran(
     var showDatePicker by remember { mutableStateOf(false) }
 
     val genderList = listOf("Laki-laki", "Perempuan")
-    val statusList = listOf("Janda", "Lajang", "Duda")
+
+    val listStatus = listOf("Lajang", "Janda", "Duda")
+    var expandedStatus by remember { mutableStateOf(false) }
+    var selectedStatus by remember { mutableStateOf("") }
 
     val backgroundLavender = Color(0xFFF3E5F5)
     val purpleButton = Color(0xFF7C3AED)
@@ -49,12 +48,10 @@ fun FormPendaftaran(
     val headerGradientEnd = Color(0xFFB388FF)
 
     val context = LocalContext.current
-    val scrollState = rememberScrollState()
 
-    // Memastikan warna ungu berlaku HANYA untuk DatePicker M3
     MaterialTheme(
         colorScheme = lightColorScheme(
-            primary = purpleButton, // Warna utama untuk Date Picker M3 (Kalender Ungu)
+            primary = purpleButton,
             secondary = purpleButton,
             tertiary = purpleButton
         )
@@ -85,12 +82,10 @@ fun FormPendaftaran(
                 )
             }
 
-            // Konten utama dengan Scroll
             Column(
                 modifier = Modifier
                     .padding(16.dp)
-                    .fillMaxSize()
-                    .verticalScroll(scrollState),
+                    .fillMaxSize(),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -106,10 +101,11 @@ fun FormPendaftaran(
                         modifier = Modifier
                             .padding(20.dp)
                             .fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                        // PENYESUAIAN RUANG: Mengurangi jarak vertikal
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         // Nama
-                        Text("NAMA LENGKAP", fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = Color.Gray)
+                        Text("NAMA LENGKAP", fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = Color.Gray) // FONT DIKECILKAN
                         OutlinedTextField(
                             value = textNama,
                             onValueChange = { textNama = it },
@@ -118,8 +114,8 @@ fun FormPendaftaran(
                             singleLine = true
                         )
 
-                        // Jenis Kelamin
-                        Text("JENIS KELAMIN", fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = Color.Gray)
+                        // Jenis Kelamin (KEMBALI KE HORIZONTAL)
+                        Text("JENIS KELAMIN", fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = Color.Gray) // FONT DIKECILKAN
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -138,28 +134,39 @@ fun FormPendaftaran(
                             }
                         }
 
-                        // Status Perkawinan
-                        Text("STATUS PERKAWINAN", fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = Color.Gray)
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        // Status Perkawinan (KEMBALI KE HORIZONTAL)
+                        ExposedDropdownMenuBox(
+                            expanded = expandedStatus,
+                            onExpandedChange = { expandedStatus = !expandedStatus }
                         ) {
-                            statusList.forEach { item ->
-                                Row(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .selectable(selected = (textStatus == item), onClick = { textStatus = item })
-                                        .padding(vertical = 4.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    RadioButton(selected = (textStatus == item), onClick = { textStatus = item })
-                                    Text(text = item, fontSize = 15.sp)
+                            OutlinedTextField(
+                                value = if (selectedStatus.isEmpty()) "" else selectedStatus,
+                                onValueChange = {},
+                                label = { Text("Status Perkawinan") },
+                                placeholder = { Text("Pilih status perkawinan") },
+                                readOnly = true,
+                                modifier = Modifier
+                                    .menuAnchor()
+                                    .fillMaxWidth()
+                            )
+                            ExposedDropdownMenu(
+                                expanded = expandedStatus,
+                                onDismissRequest = { expandedStatus = false }
+                            ) {
+                                listStatus.forEach { option ->
+                                    DropdownMenuItem(
+                                        text = { Text(option) },
+                                        onClick = {
+                                            selectedStatus = option
+                                            expandedStatus = false
+                                        }
+                                    )
                                 }
                             }
                         }
 
                         // Alamat
-                        Text("ALAMAT", fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = Color.Gray)
+                        Text("ALAMAT", fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = Color.Gray) // FONT DIKECILKAN
                         OutlinedTextField(
                             value = textAlamat,
                             onValueChange = { textAlamat = it },
@@ -169,8 +176,8 @@ fun FormPendaftaran(
                                 .heightIn(min = 60.dp, max = 100.dp)
                         )
 
-                        // Tanggal Lahir (DIKEMBALIKAN KE DEFAULT, HANYA ICON YANG UNGU)
-                        Text("TANGGAL LAHIR", fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = Color.Gray)
+                        // Tanggal Lahir
+                        Text("TANGGAL LAHIR", fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = Color.Gray) // FONT DIKECILKAN
                         OutlinedTextField(
                             value = textTanggal,
                             onValueChange = { /* readOnly */ },
@@ -178,19 +185,18 @@ fun FormPendaftaran(
                             readOnly = true,
                             trailingIcon = {
                                 Icon(
-                                    Icons.Default.Cake,
+                                    Icons.Default.CalendarToday,
                                     contentDescription = "Pilih Tanggal Lahir",
-                                    tint = purpleButton, // ICON tetap ungu
+                                    tint = purpleButton,
                                     modifier = Modifier.clickable { showDatePicker = true }
                                 )
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { showDatePicker = true }, // Klik pada field memicu dialog
-                            // BLOK COLORS TELAH DIHAPUS, SEHINGGA TAMPILAN KEMBALI DEFAULT
+                                .clickable { showDatePicker = true },
                         )
 
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(5.dp)) // JARAK LEBIH KECIL
 
                         // Tombol Submit
                         Button(
@@ -202,22 +208,24 @@ fun FormPendaftaran(
                                     textTanggal.isNotEmpty(),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(50.dp),
+                                .height(45.dp), // TOMBOL SEDIKIT LEBIH PENDEK
                             shape = RoundedCornerShape(25.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = purpleButton)
                         ) {
                             Text(
                                 text = "Submit Data",
                                 color = Color.White,
-                                fontSize = 17.sp,
+                                fontSize = 16.sp, // FONT TOMBOL LEBIH KECIL
                                 fontWeight = FontWeight.Bold
                             )
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
+                // Spacer(modifier = Modifier.height(16.dp)) // DIHAPUS/DIKURANGI JAUH
 
-                // Date Picker Composable M3 (Tetap Ungu)
+                // ... Date Picker Dialogs dan Submit Dialogs tetap sama
+
+                // Date Picker Composable M3
                 if (showDatePicker) {
                     val datePickerState = rememberDatePickerState(
                         initialSelectedDateMillis = System.currentTimeMillis()
@@ -245,7 +253,6 @@ fun FormPendaftaran(
                             }
                         }
                     ) {
-                        // DatePicker ini akan otomatis menggunakan warna 'primary' dari MaterialTheme di atas (warna ungu)
                         DatePicker(state = datePickerState)
                     }
                 }
@@ -257,9 +264,7 @@ fun FormPendaftaran(
                         confirmButton = {
                             TextButton(
                                 onClick = {
-                                    // 1. Panggil fungsi yang memicu navigasi di NavHost
                                     onSubmitClick(textNama, textJK, textStatus, textAlamat, textTanggal)
-                                    // 2. Tutup dialog setelah navigasi dipicu
                                     showSubmitDialog = false
                                 }
                             ) {
